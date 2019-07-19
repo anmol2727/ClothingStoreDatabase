@@ -1,0 +1,261 @@
+-- ************************** Task 1 **************************
+CREATE TABLE employee (
+    eID INT NOT NULL,
+    eFName VARCHAR(50) NOT NULL,
+    eLName VARCHAR(50) NOT NULL,
+    ePosition VARCHAR(30) DEFAULT NULL,
+    wage REAL NOT NULL,
+    PRIMARY KEY(eID)
+);
+
+CREATE TABLE customer (
+    membershipID INT NOT NULL,
+    cFName VARCHAR(50) NOT NULL,
+    cLName VARCHAR(50) NOT NULL,
+    billingAddress varchar(200) NOT NULL,
+    phoneNumber VARCHAR(12) NOT NULL,
+    PRIMARY KEY(membershipID)
+);
+
+CREATE TABLE merchandise (
+    mID INT NOT NULL,
+    mCategory VARCHAR(50) NOT NULL,
+    mPrice DECIMAL(7,2) NOT NULL,
+    mQuantity INT,
+    PRIMARY KEY(mID)
+);
+
+CREATE TABLE clothes (
+    cID INT NOT NULL,
+    mID INT,
+    cCategory VARCHAR(50),
+    cBrand VARCHAR(100) NOT NULL,
+    cName VARCHAR(200) NOT NULL,
+    PRIMARY KEY(cID),
+    FOREIGN KEY(mID) REFERENCES merchandise(mID)
+);
+
+CREATE TABLE accessories (
+    aID INT NOT NULL,
+    mID INT,
+    aBrand VARCHAR(50) NOT NULL,
+    aName VARCHAR(150) NOT NULL,
+    PRIMARY KEY(aID),
+    FOREIGN KEY(mID) REFERENCES merchandise(mID)
+);
+
+CREATE TABLE transaction (
+    tID INT NOT NULL,
+    membershipID INT,
+    mID INT,
+    eID INT,
+    tQuantity INT,
+    tDate DATE,
+    PRIMARY KEY(tID),
+    FOREIGN KEY(mID) REFERENCES merchandise(mID),
+    FOREIGN KEY(membershipID) REFERENCES customer(membershipID),
+    FOREIGN KEY(eID) REFERENCES employee(eID)
+);
+
+CREATE INDEX merchandise_index
+ON merchandise(mCategory);
+
+CREATE INDEX clothes_index
+ON clothes(cCategory, cBrand, cName);
+
+-- ************************** Task 2 **************************
+INSERT INTO employee VALUES(001, 'Elliott', 'Beasley', 'Manager', 65000.0);
+INSERT INTO employee VALUES(002, 'Chaz', 'Wiley', 'Assistant Manager', 50000.0);
+INSERT INTO employee VALUES(003, 'Mackenzie', 'Burke', 'Sales Associate', 38000.0);
+INSERT INTO employee VALUES(004, 'Kaleb', 'Kennedy', 'Sales Associate', 38000.0);
+INSERT INTO employee VALUES(005, 'Karlee', 'Francis', 'Sales Associate', 38000.0);
+INSERT INTO employee VALUES(006, 'Alec', 'Rich', 'Cashier', 35000.0);
+INSERT INTO employee VALUES(007, 'Sidney', 'Curry', 'Cashier', 35000.0);
+INSERT INTO employee VALUES(008, 'Jaylan', 'Conner', 'Cashier', 35000.0);
+INSERT INTO employee VALUES(009, 'Blake', 'Osborne', 'Cashier', 35000.0);
+INSERT INTO employee VALUES(010, 'Liliana', 'Little', 'Stocking Associate', 34000.0);
+INSERT INTO employee VALUES(011, 'Paulina', 'Shepard', 'Stocking Associate', 34000.0);
+INSERT INTO employee VALUES(012, 'Micaela', 'Good', 'Customer Service Associate', 39000.0);
+INSERT INTO employee VALUES(013, 'Armani', 'West', 'Customer Service Associate', 39000.0);
+INSERT INTO employee VALUES(014, 'Zackery', 'Weaver', 'Janitor', 37000.0);
+
+INSERT INTO customer VALUES(001, 'Rosemary', 'Steele', '3538 Ella Street, Oakland, CA 94607', '650-271-5016');
+INSERT INTO customer VALUES(002, 'Ulises', 'Porter', '355 Riverwood Drive, Placerville, CA 95667', '530-344-5152');
+INSERT INTO customer VALUES(003, 'Porter', 'Sanchez', '3204 Hillcrest Lane, Anaheim, CA 92805', '949-944-4411');
+INSERT INTO customer VALUES(004, 'Braiden', 'Hodge', '4393 Sycamore Street, Santa Clara, CA 95054', '408-919-1668');
+INSERT INTO customer VALUES(005, 'Kyla', 'Ortiz', '2923 Evergreen Lane, Pomona, CA 91766', '323-537-2905');
+INSERT INTO customer VALUES(006, 'Steven', 'Allison', '3066 Cemetery Street, Salinas, CA, 93901', '831-785-5434');
+INSERT INTO customer VALUES(007, 'Julio', 'Estrada', '1442 Middleville Road, City of Commerce, CA 90040', '626-353-8584');
+INSERT INTO customer VALUES(008, 'Eve', 'Porter', '2295 Riverwood Drive, Redding, CA, 96001', '530-361-6378');
+INSERT INTO customer VALUES(009, 'Reina', 'Bradford', '2140 Dennison Street, French Camp, CA 95231', '209-534-7094');
+INSERT INTO customer VALUES(010, 'Camron', 'Richard', '4390 Red Maple Drive, Los Angeles, CA 90017', '323-432-9385');
+INSERT INTO customer VALUES(011, 'Humberto', 'Wilkerson', '4348 Prospect Valley Road, Los Angeles, CA 90017', '310-969-7243');
+INSERT INTO customer VALUES(012, 'Joy', 'Randolph', '2429 Parkway Street, Palm Springs, CA 92262', '760-238-3626');
+INSERT INTO customer VALUES(013, 'Jay', 'Macias', '780 Timber Oak Drive, San Luis Obispo, CA 93401', '805-945-3290');
+INSERT INTO customer VALUES(014, 'Carly', 'Riggs', '3066 Nickel Road, Los Angeles, CA, 90017', '626-737-5689');
+INSERT INTO customer VALUES(015, 'Quentin', 'Blevins', '4348 Prospect Valley Road, Los Angeles, CA 90017', '310-969-7243');
+INSERT INTO customer VALUES(016, 'Briana', 'Gomez', '3180 Pin Oak Drive, La Habra, CA, 90631', '562-905-4414');
+INSERT INTO customer VALUES(017, 'Guadalupe', 'Meyer', '134 Cemetery Street, Oakland, CA 94612', '831-854-9471');
+INSERT INTO customer VALUES(018, 'Journey', 'Goodman', '1643 Park Avenue, Sacramento, CA 95814', '916-447-1911');
+INSERT INTO customer VALUES(019, 'Courtney', 'Oconnor', '1885 Haul Road, Fremont, CA 94538', '510-3710274');
+INSERT INTO customer VALUES(020, 'Cory', 'Gill', '2012 Creekside Lane, Goleta, CA 93117', '805-681-0153');
+INSERT INTO customer VALUES(021, 'Shayla', 'Mcknight', '2966 Fairway Drive, Crescent City, CA 95531', '707-464-9649');
+INSERT INTO customer VALUES(022, 'Kate', 'Kemp', '12931 Bel Air Avenue, Los Angeles, CA 90017', '310-339-1321');
+INSERT INTO customer VALUES(023, 'Maia', 'Houston', '522 Sycamore Street, San Jose, CA 95131', '408-922-6381');
+INSERT INTO customer VALUES(024, 'Landyn', 'Baldwin', '3656 Alexander Avenue, San Rafael, CA 94901', '925-621-2722');
+INSERT INTO customer VALUES(025, 'Corey', 'Farley', '3001 Liberty Avenue, Anaheim, CA 92804', '714-503-4440');
+INSERT INTO customer VALUES(026, 'Kaleigh', 'Vega', '828 Coleman Avenue, Palm Springs, CA 92262', '760-820-6931');
+
+INSERT INTO merchandise VALUES(001, 'T-Shirts', 69.99, 9);
+INSERT INTO merchandise VALUES(002, 'T-Shirts', 44.99, 17);
+INSERT INTO merchandise VALUES(003, 'T-Shirts', 29.99, 11);
+INSERT INTO merchandise VALUES(004, 'T-Shirts', 9.99, 3);
+INSERT INTO merchandise VALUES(005, 'Jeans', 64.99, 23);
+INSERT INTO merchandise VALUES(006, 'Jeans', 49.99, 8);
+INSERT INTO merchandise VALUES(007, 'Jeans', 21.50, 19);
+INSERT INTO merchandise VALUES(008, 'Jeans', 34.95, 2);
+INSERT INTO merchandise VALUES(009, 'Jeans', 59.99, 14);
+INSERT INTO merchandise VALUES(010, 'Shirts', 35.99, 1);
+INSERT INTO merchandise VALUES(011, 'Shirts', 49.99, 12);
+INSERT INTO merchandise VALUES(012, 'Shirts', 19.99, 43);
+INSERT INTO merchandise VALUES(013, 'Shirts', 25.50, 54);
+INSERT INTO merchandise VALUES(014, 'Pants', 59.99, 12);
+INSERT INTO merchandise VALUES(015, 'Pants', 34.50, 14);
+INSERT INTO merchandise VALUES(016, 'Pants', 21.00, 4);
+INSERT INTO merchandise VALUES(017, 'Pants', 79.00, 31);
+INSERT INTO merchandise VALUES(018, 'Pants', 45.00, 23);
+INSERT INTO merchandise VALUES(019, 'Jackets', 90.00, 6);
+INSERT INTO merchandise VALUES(020, 'Jackets', 21.99, 16);
+INSERT INTO merchandise VALUES(021, 'Jackets', 49.99, 12);
+INSERT INTO merchandise VALUES(022, 'Hoodies', 45.99, 15);
+INSERT INTO merchandise VALUES(023, 'Hoodies', 34.99, 25);
+INSERT INTO merchandise VALUES(024, 'Hoodies', 25.99, 1);
+INSERT INTO merchandise VALUES(025, 'Sweaters', 99.99, 5);
+INSERT INTO merchandise VALUES(026, 'Sweaters', 45.50, 7);
+INSERT INTO merchandise VALUES(027, 'Purses', 290.00, 3);
+INSERT INTO merchandise VALUES(028, 'Purses', 60.00, 12);
+INSERT INTO merchandise VALUES(029, 'Wallets', 71.95, 8);
+INSERT INTO merchandise VALUES(030, 'Wallets', 21.99, 4);
+INSERT INTO merchandise VALUES(031, 'Belts', 120.00, 3);
+INSERT INTO merchandise VALUES(032, 'Belts', 15.99, 12);
+INSERT INTO merchandise VALUES(033, 'Hats', 23.95, 7);
+INSERT INTO merchandise VALUES(034, 'Hats', 49.99, 3);
+INSERT INTO merchandise VALUES(035, 'Gloves', 89.99, 23);
+INSERT INTO merchandise VALUES(036, 'Gloves', 32.50, 1);
+
+INSERT INTO clothes VALUES(001, 001, 'Crewneck', 'Nike', 'Unisex Dri-FIT Long-Sleeve Running T-Shirt');
+INSERT INTO clothes VALUES(002, 002, 'Thermal', 'Polo Ralph Lauren', 'Mens Ultra Soft Waffle-Knit Thermal T-Shirt');
+INSERT INTO clothes VALUES(003, 003, 'Henley', 'Liz Claiborne', 'Womens Garment Dyed Henley T-Shirt');
+INSERT INTO clothes VALUES(004, 004, 'V-Neck', 'Calvin Klein', 'Mens Short-Sleeve Casual V-Neck T-Shirt');
+INSERT INTO clothes VALUES(005, 005, 'Skinny', 'INC International Concepts', 'Womens INCEssentials Curvy-Fit Skinny Jeans');
+INSERT INTO clothes VALUES(006, 006, 'Straight', 'Charter Club', 'Womens Lexington Straight-Leg Jeans');
+INSERT INTO clothes VALUES(007, 007, 'Bootcut', 'Liverpool Jeans', 'Womens Lucy Bootcut Jeans');
+INSERT INTO clothes VALUES(008, 008, 'Slim Fit', 'Levis', 'Mens 511 Slim Fit Jeans');
+INSERT INTO clothes VALUES(009, 009, 'Tapered', 'Wrangler', 'Mens Regular Fit Tapered Leg Jeans');
+INSERT INTO clothes VALUES(010, 010, 'Casual', 'Polo Ralph Lauren', 'Mens Classic Fit Performance Twill Shirt');
+INSERT INTO clothes VALUES(011, 011, 'Dress', 'Alfani', 'Mens Classic Slim-Fit Performance Shirt');
+INSERT INTO clothes VALUES(012, 012, 'Dress', 'Stafford', 'Womens Classic Fit Performance Shirt');
+INSERT INTO clothes VALUES(013, 013, 'Casual', 'Forever 21', 'Womens Casual Button Down Shirt');
+INSERT INTO clothes VALUES(014, 014, 'Dress', 'Alfani', 'Mens Classic-Fit Solid Linen Dress Pants');
+INSERT INTO clothes VALUES(015, 015, 'Leggings', 'Nike', 'Womens Dri-FIT Compression Tights');
+INSERT INTO clothes VALUES(016, 016, 'Joggers', 'Nike', 'Mens Dri-FIT Performance Joggers');
+INSERT INTO clothes VALUES(017, 017, 'Sweatpants', 'Adidas', 'Mens 3 Stripe Straight Sweatpants');
+INSERT INTO clothes VALUES(018, 018, 'Track', 'Under Armour', 'Womens Running High Performance Running Track Pants');
+INSERT INTO clothes VALUES(019, 019, 'Raincoat', 'The North Face', 'Mens Resolve 2 Waterproof Jacket');
+INSERT INTO clothes VALUES(020, 020, 'Active', 'Champion', 'Womens Packable Half-Zip Hooded Water-Resistant Jacket');
+INSERT INTO clothes VALUES(021, 021, 'Demin', 'Levis', 'Mens Demin Trucker Jacket');
+INSERT INTO clothes VALUES(022, 022, 'Pullover', 'GUESS', 'Mens Go Field Colorblocked Stripe Logo Pullover');
+INSERT INTO clothes VALUES(023, 023, 'Crewneck', 'Nike', 'Womens Dri-FIT High Performance Crewneck');
+INSERT INTO clothes VALUES(024, 024, 'Half-Zip', 'Adidas', 'Mens High Performance Half-Zip Hoodie');
+INSERT INTO clothes VALUES(025, 025, 'Cardigan', 'Perry Ellis', 'Mens V-Neck Cardigan Sweater');
+INSERT INTO clothes VALUES(026, 026, 'Crewneck', 'Tommy Hilfiger', 'Womens Flag Colorblocked Crewneck Sweater');
+
+INSERT INTO accessories VALUES(001, 027, 'COACH', 'Floral Highline Tote');
+INSERT INTO accessories VALUES(002, 028, 'Buxton', 'Chelsea RFID Ensemble Clutch');
+INSERT INTO accessories VALUES(003, 029, 'GUESS', 'Pomona RFID Leather Wallet');
+INSERT INTO accessories VALUES(004, 030, 'Levis', 'RFID Extra-Capacity Leather Wallet');
+INSERT INTO accessories VALUES(005, 031, 'Perry Ellis', 'Mens Leather Amigo Dress Belt');
+INSERT INTO accessories VALUES(006, 032, 'Hugo Boss', 'Mens Gellot Leather Belt');
+INSERT INTO accessories VALUES(007, 033, 'Nine West', 'Womens Floppy Hat');
+INSERT INTO accessories VALUES(008, 034, 'Nike', 'Mens Sportswear Cap');
+INSERT INTO accessories VALUES(009, 035, 'Nike', 'Mens Dri-FIT Gym Gloves');
+INSERT INTO accessories VALUES(010, 036, 'Nike', 'Womens Dri-FIT Gym Gloves');
+
+INSERT INTO transaction VALUES(001, 001, 021, 006, 1, '2019-04-01');
+INSERT INTO transaction VALUES(002, 002, 011, 007, 3, '2019-04-01');
+INSERT INTO transaction VALUES(003, 003, 026, 008, 1, '2019-04-01');
+INSERT INTO transaction VALUES(004, 004, 014, 008, 1, '2019-04-01');
+INSERT INTO transaction VALUES(005, 005, 003, 008, 2, '2019-04-01');
+INSERT INTO transaction VALUES(006, 006, 005, 009, 2, '2019-04-01');
+INSERT INTO transaction VALUES(007, 007, 009, 009, 3, '2019-04-02');
+INSERT INTO transaction VALUES(008, 008, 010, 006, 2, '2019-04-02');
+INSERT INTO transaction VALUES(009, 009, 022, 006, 1, '2019-04-02');
+INSERT INTO transaction VALUES(010, 010, 030, 007, 1, '2019-04-02');
+INSERT INTO transaction VALUES(011, 011, 036, 005, 5, '2019-04-02');
+INSERT INTO transaction VALUES(012, 012, 001, 003, 3, '2019-04-02');
+INSERT INTO transaction VALUES(013, 013, 001, 003, 2, '2019-04-02');
+INSERT INTO transaction VALUES(014, 014, 001, 003, 1, '2019-04-02');
+INSERT INTO transaction VALUES(015, 015, 006, 006, 1, '2019-04-03');
+INSERT INTO transaction VALUES(016, 016, 016, 006, 1, '2019-04-03');
+INSERT INTO transaction VALUES(017, 017, 024, 006, 1, '2019-04-03');
+INSERT INTO transaction VALUES(018, 018, 014, 009, 1, '2019-04-03');
+INSERT INTO transaction VALUES(019, 019, 017, 009, 1, '2019-04-03');
+INSERT INTO transaction VALUES(020, 020, 027, 008, 1, '2019-04-03');
+INSERT INTO transaction VALUES(021, 021, 035, 008, 4, '2019-04-03');
+INSERT INTO transaction VALUES(022, 022, 023, 008, 3, '2019-04-04');
+INSERT INTO transaction VALUES(023, 023, 004, 007, 2, '2019-04-04');
+INSERT INTO transaction VALUES(024, 024, 017, 007, 1, '2019-04-04');
+INSERT INTO transaction VALUES(025, 025, 023, 007, 1, '2019-04-04');
+INSERT INTO transaction VALUES(026, 026, 005, 005, 1, '2019-04-04');
+
+-- ************************** Task 3 **************************
+
+-- This query is used to retrieve the count of each clothes brand
+SELECT COUNT(*), cBrand
+FROM clothes
+GROUP BY cBrand;
+
+-- This query is used to retrieve the average price of the merchandise
+SELECT AVG(mPrice)
+FROM merchandise;
+
+-- This query is used to retrieve the count of how many Joggers or Sweatpants are available
+SELECT cCategory, COUNT(*)
+FROM clothes
+GROUP BY cCategory
+HAVING cCategory = 'Joggers' OR
+       cCategory = 'Sweatpants';
+
+-- This query is used to retrieve merchandise ID column from the merchandise table and the clothes name column from the clothes table
+SELECT mID, cName
+FROM clothes
+WHERE mID IN (
+    SELECT mID
+    FROM merchandise
+);
+
+-- This query is used to retrieve the merchandise ID and the price of the accessories
+SELECT m.mID AS merchID, mPrice AS accPrice
+FROM merchandise m, accessories a
+WHERE EXISTS (
+    SELECT *
+    FROM accessories a
+    WHERE a.mID = m.mID
+);
+
+-- This query is used to retrieve the first name and last name of all employees that did not make a transaction
+SELECT e.eFName AS EmployeeFirstName, e.eLName AS EmployeeLastName
+FROM employee e
+WHERE e.eID NOT IN (
+    SELECT t.eID
+    FROM transaction t
+);
+
+-- This query is used to retrieve all merchandise that is under 5 in quantity
+SELECT *
+FROM merchandise merchandise_index
+WHERE mQuantity < 5;
+
+-- This query is used to retrieve the indexed clothes table
+SELECT *
+FROM clothes clothes_index;
